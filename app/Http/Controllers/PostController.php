@@ -10,10 +10,18 @@ class PostController extends Controller
     
     public function index() {
         $posts = Post::all();
-
+        
+        if($posts->isEmpty()) {
+            $datos = [
+                'message' => "No se han encontrado posts publicados",
+                'status' => 200,
+            ];
+            
+            return response()->json($datos, 200);
+        }
         return response()->json($posts, 200);
     }
-
+    
     public function store(Request $request) {
 
         $validarDatos = $request->validate([
