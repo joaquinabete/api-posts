@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,14 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/posts', function() {
-    return 'Listando todos los Posts';
-});
+Route::get('/posts', [PostController::class, 'index']);
 
 Route::get('/posts/{id}', function() {
     return 'Obteniendo un solo Post';
 });
 
-Route::post('/posts', function() {
-    return 'Creando un Post';
-});
+Route::post('/posts', [PostController::class, 'store']);
+
+
