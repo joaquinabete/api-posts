@@ -14,10 +14,10 @@ class PostController extends Controller
         if($posts->isEmpty()) {
             $datos = [
                 'message' => "No se han encontrado posts publicados",
-                'status' => 200,
+                'status' => 404,
             ];
             
-            return response()->json($datos, 200);
+            return response()->json($datos, 404);
         }
         return response()->json($posts, 200);
     }
@@ -41,5 +41,22 @@ class PostController extends Controller
 
     }
 
+    public function show($id) {
+        $posts = Post::find($id);
 
+        if(!$posts) {
+            $datos = [
+                'message' => "Hay mas de un Post publicado",
+                'status' => 404
+            ];
+            return response()->json($datos,404);
+        }
+
+        $datos = [
+            'message' => 'Se ha obtenido el Post correctamente',
+            'status' => 200,
+            'posts' => $posts
+        ];
+        return response()->json($datos, 200);
+    }
 }

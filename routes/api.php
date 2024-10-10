@@ -16,11 +16,7 @@ use App\Http\Controllers\PostController;
 */
 
 Route::get('/posts', [PostController::class, 'index']);
-
-Route::get('/posts/{id}', function() {
-    return 'Obteniendo un solo Post';
-});
-
+Route::get('/posts/{id}', [PostController::class, 'show']);
 Route::post('/posts', [PostController::class, 'store']);
 
 
