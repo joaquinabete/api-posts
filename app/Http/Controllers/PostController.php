@@ -13,7 +13,7 @@ class PostController extends Controller
         
         if($posts->isEmpty()) {
             $datos = [
-                'message' => "No se han encontrado posts publicados",
+                'message' => "No se han encontrado Posts publicados",
                 'status' => 404,
             ];
             
@@ -46,7 +46,7 @@ class PostController extends Controller
 
         if(!$posts) {
             $datos = [
-                'message' => "Hay mas de un Post publicado",
+                'message' => "No se encontro ni un solo Post publicado",
                 'status' => 404
             ];
             return response()->json($datos,404);
