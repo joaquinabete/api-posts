@@ -42,21 +42,21 @@ class PostController extends Controller
     }
 
     public function show($id) {
-        $posts = Post::find($id);
+        try {
+            $posts = Post::findOrFail($id);
 
-        if(!$posts) {
-            $datos = [
-                'message' => "No se encontro ni un solo Post publicado",
+        return response()->json([
+            'message' => 'Post obtenido con exito',
+            'post' => $posts,
+            'status' => 200
+        ], 200);
+
+        }catch(ModelNotFoundException $e) {
+
+            return response()->json([
+                'message' => 'Post no encontrado',
                 'status' => 404
-            ];
-            return response()->json($datos,404);
+            ], 404);
         }
-
-        $datos = [
-            'message' => 'Se ha obtenido el Post correctamente',
-            'status' => 200,
-            'posts' => $posts
-        ];
-        return response()->json($datos, 200);
     }
 }
