@@ -28,21 +28,13 @@ class PostController extends Controller
     
     public function store(Request $request) {
 
-        $validarDatos = $request->validate([
-            'id_autor' => 'required|integer',
-            'titulo' => 'required|string|max:255',
-            'fecha' => 'required|date',
-            'contenido' => 'required|string',
-        ]);
-        
         $posts = Post::create([
-            'id_autor' => $validarDatos['id_autor'],
-            'titulo' => $validarDatos['titulo'],
-            'fecha' => $validarDatos['fecha'],
-            'contenido' => $validarDatos['contenido'], 
+            'id_autor' => $request-> id_autor,
+            'titulo' => $request-> titulo,
+            'fecha' => $request -> fecha,
+            'contenido' => $request -> contenido, 
         ]);
-        return response()->json($posts, 201);
-
+        return response()->json(['message' => 'Post creado exitosamente', 'post' => $posts], 201);
     }
 
     public function show($id) {
