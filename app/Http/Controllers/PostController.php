@@ -10,16 +10,20 @@ class PostController extends Controller
     
     public function index() {
         $posts = Post::all();
+
+        if ($posts->isEmpty()) {
+            return response()->json([
+            'message' => 'No se encontro ningun Post publicado',
+            'status' => 404            
+        ], 404);
         
-        if($posts->isEmpty()) {
-            $datos = [
-                'message' => "No se han encontrado Posts publicados",
-                'status' => 404,
-            ];
-            
-            return response()->json($datos, 404);
         }
-        return response()->json($posts, 200);
+
+        return response()->json([
+            'message' => 'Todos los Posts han sido obtenidos exitosamente',
+            'status' => 200,
+            'posts' => $posts
+        ], 200);
     }
     
     public function store(Request $request) {
@@ -47,8 +51,8 @@ class PostController extends Controller
 
         return response()->json([
             'message' => 'Post obtenido con exito',
-            'post' => $posts,
-            'status' => 200
+            'status' => 200,
+            'post' => $posts
         ], 200);
 
         }catch(ModelNotFoundException $e) {
