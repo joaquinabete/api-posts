@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -27,6 +28,15 @@ class PostController extends Controller
     }
     
     public function store(Request $request) {
+
+        $validator = Validator::make($request->all(),[
+            'titulo' => 'required|max:value:30|alpha',
+            'fecha' => 'required|date_format:Y-m-d',
+            'contenido' => 'required|string|min:15|max:180'
+        ]);
+
+        if($validator->fails())
+            return $validator->errors();
 
         $posts = Post::create([
             'id_autor' => $request-> id_autor,
