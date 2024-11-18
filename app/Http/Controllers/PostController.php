@@ -36,7 +36,7 @@ class PostController extends Controller
         ]);
 
         if($validator->fails())
-            return $validator->errors();
+            return response()->json(['message' => 'Error de vaidación', 'error' =>  $validator->errors()], 400);
 
         $posts = Post::create([
             'id_autor' => $request-> id_autor,
